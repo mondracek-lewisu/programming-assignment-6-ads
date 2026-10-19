@@ -1,6 +1,6 @@
 import time
 
-def open_crime(filename='Crime_Data_from_2020_to_2024.txt'):
+def open_crime(filename='Crime_Data_from_2020_to_2024(2).txt'):
     infile = open(filename)
     table = list()
     for data in infile:
@@ -11,7 +11,7 @@ def open_crime(filename='Crime_Data_from_2020_to_2024.txt'):
     infile.close()
     return table
 
-def open_vehicle(filename='Electric_Vehicle_Population_Data.txt'):
+def open_vehicle(filename='Electric_Vehicle_Population_Data(2).txt'):
     infile = open(filename)
     table = list()
     for data in infile:
@@ -21,8 +21,50 @@ def open_vehicle(filename='Electric_Vehicle_Population_Data.txt'):
     infile.close()
     return table
     
-def merge_sort(list):
-    pass
+def merge_sort(records):
+    if len(records) <= 1:
+        return
+
+    middle = len(records) // 2
+
+    left = records[:middle]
+    right = records[middle:]
+
+    merge_sort(left)
+    merge_sort(right)
+
+    merge(records, left, right)
+
+
+def merge(records, left, right):
+    i = 0
+    j = 0
+    k = 0
+
+    while i < len(left) and j < len(right):
+        if left[i][0] <= right[j][0]:
+            records[k] = left[i]
+            i += 1
+        else:
+            records[k] = right[j]
+            j += 1
+        k += 1
+
+    while i < len(left):
+        records[k] = left[i]
+        i += 1
+        k += 1
+
+    while j < len(right):
+        records[k] = right[j]
+        j += 1
+        k += 1
+
+def is_sorted(records):
+    for i in range(len(records) - 1):
+        if records[i][0] > records[i + 1][0]:
+            return False
+    return True
 
 crime_data = open_crime()
 vehicle_data = open_vehicle()
